@@ -1,0 +1,78 @@
+<div data-ng-hide="notificationMessage == ''" data-ng-class="(!errorOccurd) ? 'alert alert-success' : 'alert alert-danger'">
+        {{notificationMessage}}
+    </div>
+<div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default" ng-click="showContacts()">Contacts
+        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="btn btn-default">Scheduled calls
+        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="btn btn-default">Scheduled meetings
+        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+      </button>
+</div>
+<br/>
+<br/>
+<div class="btn-group-horizontal">
+    <button type="button" class="btn btn-success" aria-label="Left Align" ng-click="openAddContactModal()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true">Add</span>
+    </button>
+</div>
+    <!-- <button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button> -->
+    <table ng-table="tableParamsContact" class="table">
+        <tr ng-repeat="user in $data">
+            <td data-title="'name'" sortable="'name'">
+                {{user.name}}
+            </td>
+            <td data-title="'Nickname'" sortable="'nickname'">
+                {{user.nickname}}
+            </td>
+            <td data-title="'Email'" sortable="'email'">
+                {{user.email}}
+            </td>
+            <td data-title="'Actions'">
+              <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="deleteUser(user._id)">
+                  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+              </button>
+              <div class="btn-group" role="group" aria-label="...">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                Add
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Schedule call</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Schedule appointment</a></li>
+              </ul>
+            </div>
+           </td>
+        </tr>
+    </table>
+    <table ng-table="tableParamsScheduled" class="table" ng-show="showCalls || showMeetings">
+        <tr ng-repeat="user in $data">
+            <td data-title="'name'" sortable="'name'">
+                {{user.name}}
+            </td>
+            <td data-title="'Nickname'" sortable="'nickname'">
+                {{user.nickname}}
+            </td>
+            <td data-title="'Email'" sortable="'email'">
+                {{user.email}}
+            </td>
+            <td data-title="'Actions'">
+              <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="deleteUser(user._id)">
+                  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+              </button>
+              <div class="btn-group" role="group" aria-label="...">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                Add
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Schedule call</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Schedule appointment</a></li>
+              </ul>
+            </div>
+           </td>
+        </tr>
+    </table>
