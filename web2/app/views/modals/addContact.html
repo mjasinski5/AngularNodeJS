@@ -29,6 +29,13 @@
         </span>
      </span>
     </p>
+    <p>
+        Phone number:
+        <input type="text" name="firstname" ng-model="submitModel.phoneNumber" required>
+        <span style="color:red" ng-show="myForm.firstname.$dirty && myForm.firstname.$invalid">
+            <span ng-show="myForm.firstname.$error.required">Firstname is required.</span>
+        </span>
+    </p>
     <div class="form-group">
 
         <button type="submit" ng-click="ok()" class="btn btn-primary pull-left"

@@ -30,7 +30,7 @@ var app = angular
 		dialogsProvider.useEscClose(false);
 		dialogsProvider.useCopy(false);
 		dialogsProvider.setSize('sm');
-    
+
 
     $routeProvider
       .when('/', {
@@ -44,6 +44,10 @@ var app = angular
       .when('/contacts', {
         templateUrl: 'views/contacts.html',
         controller: 'ContactsCtrl'
+      })
+      .when('/schedule/addPhoneCall', {
+        templateUrl: 'views/addScheduledPhone.html',
+        controller: 'addScheduledPhone'
       })
       .otherwise({
         redirectTo: '/'

@@ -1,0 +1,22 @@
+<div class="modal-header">
+     <h3 class="modal-title">Contact searcher.</h3>
+</div>
+<div class="modal-body">
+          <table ng-table="tableParams" show-filter="true" class="table ng-table-rowselected">
+              <tr ng-repeat="user in $data"
+                  ng-click="user.$selected = !user.$selected; changeSelection(user)"
+                  ng-class="{'active': user.$selected}">
+                  <td data-title="'Name'" sortable="'name'" filter="{ 'name': 'text' }">
+                      {{user.name}}
+                  </td>
+                  <td data-title="'Phone number'" sortable="'age'" filter="{ 'age': 'text' }">
+                      {{user.phoneNumber}}
+                  </td>
+              </tr>
+          </table>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

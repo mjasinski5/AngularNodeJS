@@ -1,0 +1,44 @@
+
+<form name="myForm" novalidate>
+    <p>
+        Name:
+        <input type="text" name="name" ng-model="submitModel.name" required>
+        <span style="color:red" ng-show="myForm.firstname.$dirty && myForm.firstname.$invalid">
+            <span ng-show="myForm.firstname.$error.required">Name is required.</span>
+        </span>
+    </p>
+    <p>
+        Contacts: <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" ng-click="showContactSearcher()">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+
+        <div ng-repeat="m in submitModel.contacts">
+        <button class="btn btn-default btm-sm" aria-label="Left Align" ng-click="deleteSelectedUser(m)">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+          </button>  {{ m.name }}
+          </div>
+
+    </p>
+    <p>
+        Date:
+        <input type="date" id="exampleInput" name="input" ng-model="submitModel.date"
+         placeholder="yyyy-MM-dd-hh-mm" required />
+    </p>
+    <p>
+        Hour:
+        <input type="time" id="exampleInput" name="input2" ng-model="submitModel.hour"
+       placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required />
+    </p>
+    <div class="form-group">
+
+        <button type="submit" ng-click="addScheduledPhone()" class="btn btn-primary pull-left"
+                value="Submit" title="Submit" ng-disabled="myForm.firstname.$dirty && myForm.firstname.$invalid ||
+  myForm.email.$dirty && myForm.email.$invalid ||
+  myForm.lastname.$dirty && myForm.lastname.$invalid">
+            <span>Add contact!</span>
+        </button>
+    </div></br></br>
+    <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+        {{message}}
+    </div>
+</form>

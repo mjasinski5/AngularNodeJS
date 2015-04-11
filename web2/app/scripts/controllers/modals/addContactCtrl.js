@@ -6,7 +6,8 @@ $scope.submitModel =
   name:'',
   lastname: '',
   nickname: '',
-  email: ''
+  email: '',
+  phoneNumber: ''
 };
 
 

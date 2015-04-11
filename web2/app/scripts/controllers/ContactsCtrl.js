@@ -20,7 +20,7 @@ app.controller('ContactsCtrl', ['$scope', 'ngTableParams', '$filter', 'contact',
 
 	var getScheduledItems = function(){
 			return schedule.GetScheduledItems().then(function(results){
-				$scope.scheduledItemsData = result.data;
+				$scope.scheduledItemsData = results.data;
 				refreshScheduleData();
 			})
 
@@ -57,8 +57,7 @@ app.controller('ContactsCtrl', ['$scope', 'ngTableParams', '$filter', 'contact',
 	$scope.data = [];
 	$scope.errorOccurd = false;
 	$scope.notificationMessage = '';
-	$scope.data = {};
-	$scope.scheduledItemsData = {};
+	$scope.scheduledItemsData = [];
 	//end
 
 	$scope.tableParamsContact = new ngTableParams({
