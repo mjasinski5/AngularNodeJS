@@ -1,16 +1,20 @@
 var express = require('express');
 var async = require('async');
-var dbData = [];
+var events = require('events');
+var deasync = require('deasync');
+
 var files= [];
 var fs = require('fs');
+var dbData;
+var database = {};
+var succeed = false;
+var eventEmitter = new events.EventEmitter();
 
 
 var loadDatabaseData = function(callback){
-  console.log("in loadDtaabase");
-  console.log(db);
   database.collection('scheduledItems').find().toArray(function(arr, err){
     if(err)
-      callback(err);
+      return callback(err);
     dbData = arr;
   })
 }
@@ -19,78 +23,61 @@ var loadDatabaseData = function(callback){
 when its finished async.parallel fires up which is resposible
 for creating files with reports */
 var dailyReport = function(db, date) {
-  console.log(db);
-  var database = db;
-  /*
-async.series([
-  loadDatabaseData.bind(null, cb, db),
-  parallelTasks
-], cb)*/
-async.series([
-  function(callback){
-      console.log("in loadDtaabase");
-      database.collection('scheduledItems').find().toArray(function(err, arr){
-        if(err)
-        {
-          console.log("inside err");
-          return callback(err);
-        }
-        dbData = arr;
-        console.log("inside find");
-        console.log(arr);
-        callback();
-      })
+  database = db;
+  makeAsynchroniousOperation();
 
-  },
-  function(callback) {
-    console.log("inside 0 par");
+  while(!succeed)
+    deasync.runLoopOnce();
 
-    async.parallel([
-      function(callback){
-        console.log("inside 1 par");
-        var date = new Date();
-        var fileName = "report_gen.txt";
-        fs.writeFile(fileName, "fdfddfdf", function(err){
-          if(err)
-          {
-            console.log("inside err - par");
-            return callback(err);
-          }
-          else {
-            console.log("inside par OK");
-            callback();
-            }
-        });
-      },
-      function(callback){
-          console.log("2 parallel");
-          callback();
-      }
-    ], callback)
-  }
-    ], function(err) {
-        if (err)
-           console.log(err);
-        console.log('all ok');
-    });
+  return files;
 }
 
-var parallelTasks = function(callback){
-  console.log("in parralel");
+function makeAsynchroniousOperation(){
+  async.series([
+    loadFromDatabase,
+    makeReportsInParallel
+  ], done);
+}
+
+function loadFromDatabase(callback){
+  database.collection('scheduledItems').find().toArray(function(err, arr){
+    if(err)
+      return callback(err);
+
+    dbData = arr;
+    callback();
+  })
+}
+
+function done(err)
+{
+  if(err)
+    console.log(err)
+  else
+  {
+    console.log("all went ok");
+  }
+  succeed = true;
+
+}
+
+function makeReportsInParallel(callback){
   async.parallel([
-    makeDailyCallReport.bind(null, dbData),
-    makeDailyMeetReport.bind(null, dbData)
+    createFile,
+    randomTask
   ], callback)
 }
 
+function randomTask(callback){
+  var fileName = "report_gen2.txt"
+  fs.writeFile(fileName, JSON.stringify(dbData), callback);
+  addFile(fileName);
+}
 
-
-var cb = function(err){
-  console.log("inside callback")
-
-  if(err)
-    console.log("something went wrong... : " + err);
-  else return files;
+function createFile(callback){
+    var fileName = "report_gen.txt"
+    fs.writeFile(fileName, JSON.stringify(dbData), callback);
+    addFile(fileName);
 }
 
 var addFile = function(file){
