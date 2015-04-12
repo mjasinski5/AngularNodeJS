@@ -9,7 +9,7 @@ var cors = require('cors');
 var routes = require('./routes/index');
 var contact = require('./routes/contact');
 var schedule = require('./routes/schedule');
-
+var reports = require('./routes/reports');
 var app = express();
 
 // view engine setup
@@ -37,6 +37,7 @@ app.use(function(req,res,next){
 app.use('/', routes);
 app.use('/contact', contact);
 app.use('/schedule', schedule);
+app.use('/reports', reports);
 
 
 // catch 404 and forward to error handler

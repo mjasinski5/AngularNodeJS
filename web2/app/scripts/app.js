@@ -49,6 +49,10 @@ var app = angular
         templateUrl: 'views/addScheduledPhone.html',
         controller: 'addScheduledPhone'
       })
+      .when('/reports', {
+        templateUrl: 'views/reports.html',
+        controller: 'ReportsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
